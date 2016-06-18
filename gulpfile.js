@@ -17,3 +17,5 @@ gulp.task('build', ['copyIndex'], function (cb) {
   .pipe(webpack(webpackConfig))
   .pipe(gulp.dest(''));
 });
+
+gulp.task('default', ['build']);
