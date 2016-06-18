@@ -1,13 +1,19 @@
 import React, {Component, PropTypes} from 'react';
 
 export default class OriginCanvas extends Component {
-  componentDidMount() {
-    this.canvas = findDOMNode(this);
-    this.ctx = this.canvas.getContext('2d');
+  constructor(props) {
+    super(props);
+    this.state = {};
+
+    this.canvasContext.bind(this);
   }
 
-  context() {
-    return this.ctx;
+  componentDidMount() {
+    this.setState({ ctx: this.refs.canvas.getContext('2d') });
+  }
+
+  canvasContext() {
+    return this.state.ctx;
   }
 
   render() {
@@ -18,7 +24,7 @@ export default class OriginCanvas extends Component {
       top: 100
     };
     return (
-      <canvas
+      <canvas ref="canvas"
         style={style}
         width="64"
         height="64">

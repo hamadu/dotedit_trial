@@ -7,7 +7,6 @@ export default () => {
       y: y
     };
   };
-
   const onMouseMove = (ctx, x, y) => {
     console.log(drawingInfo);
     if (!drawingInfo) {
