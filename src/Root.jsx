@@ -1,27 +1,54 @@
 const React = require('react');
 const ToolPalette = require('./components/ToolPalette');
 const ColorPalette = require('./components/ColorPalette');
-// const DotCanvas = require('./components/DotCanvas');
-// import OriginCanvas from './components/OriginCanvas'
 import Layer from './components/Layer';
 import Drawer from './components/Drawer';
+import Pencil from './components/tools/Pencil'
 
 
 const Root = React.createClass({
   getInitialState: function () {
-    return { name: "not clicked"  };
+    return {
+      name: "not clicked",
+      color: 'rgb(0,0,255)',
+      tool: Pencil(),
+      selection: {},
+      last: {},
+      drawing: false
+    };
+  },
+
+  onDraw: function(op) {
+    const to = (op.to === 'virtual') ? this.refs.drawer : this.refs.layer;
+    switch (op.kind) {
+      case 'dot':
+        to.drawDot(op.x, op.y, this.state.color);
+        this.setState({ last: { x: op.x, y: op.y }});
+        break;
+      case 'line':
+        to.drawLine(this.state.last.x, this.state.last.y, op.x, op.y, this.state.color);
+        this.setState({ last: { x: op.x, y: op.y }});
+        break;
+    }
   },
 
   onMouseDown: function(x, y) {
-    console.log("down", x, y);
+    const inst = this.state.tool.onMouseDown(x, y);
+    this.setState({ drawing: true });
+    this.onDraw(inst);
   },
 
   onMouseMove: function(x, y) {
-    console.log("move", x, y);
+    if (this.state.drawing) {
+      const inst = this.state.tool.onMouseMove(x, y);
+      this.onDraw(inst);
+    }
   },
 
   onMouseUp: function(x, y) {
-    console.log("up", x, y);
+    const inst = this.state.tool.onMouseMove(x, y);
+    this.setState({ drawing: false });
+    this.onDraw(inst);
   },
 
   render: function() {
@@ -29,9 +56,11 @@ const Root = React.createClass({
       <div>
         <ToolPalette />
         <ColorPalette />
-        <Layer />
+        <Layer ref="layer" />
 
         <Drawer
+          ref="drawer"
+          onDraw={this.onDraw}
           onMouseDown={this.onMouseDown}
           onMouseMove={this.onMouseMove}
           onMouseUp={this.onMouseUp}

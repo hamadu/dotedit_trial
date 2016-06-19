@@ -39,7 +39,8 @@ export default class Drawer extends Component {
     const style = {
       position: 'absolute',
       left: 100,
-      top: 100
+      top: 100,
+      z: 999
     }
     return (
       <canvas

@@ -5,6 +5,7 @@ export default class OriginCanvas extends Component {
     super(props);
     this.state = {};
 
+    this.canvas.bind(this);
     this.canvasContext.bind(this);
   }
 
@@ -12,8 +13,12 @@ export default class OriginCanvas extends Component {
     this.setState({ ctx: this.refs.canvas.getContext('2d') });
   }
 
+  canvas() {
+    return this.refs.canvas;
+  }
+
   canvasContext() {
-    return this.state.ctx;
+    return this.refs.canvas.getContext('2d');
   }
 
   render() {
@@ -26,8 +31,8 @@ export default class OriginCanvas extends Component {
     return (
       <canvas ref="canvas"
         style={style}
-        width="64"
-        height="64">
+        width="32"
+        height="32">
       </canvas>
     );
   }

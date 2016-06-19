@@ -4,32 +4,83 @@ import DotCanvas from './DotCanvas';
 
 export default class Layer extends Component {
   constructor(props) {
-    super(props)
-    this.state = { z: 1 }
+    super(props);
+    this.state = { z: 1 };
 
-    this.drawLine.bind()
+    this.drawDot.bind(this);
+    this.drawLine.bind(this);
+    this.dotToOrigin.bind(this);
+    this.dotToDot.bind(this);
   }
 
   componentDidMount() {
+    console.log(this.refs.origin.canvasContext());
     this.originCtx = this.refs.origin.canvasContext();
+    this.originCanvas = this.refs.origin.canvas();
+
     this.dotCtx = this.refs.dot.canvasContext();
 
     console.log(this.originCtx, this.dotCtx);
   }
 
-  drawLine(fx, fy, tx, ty) {
-    //
+  lineToDots(fx, fy, tx, ty) {
+    const dots = [];
+    if (fx == tx) {
+      while (fy != ty) {
+        dots.push([fx, fy]);
+        fy += (ty - fy >= 1) ? 1 : -1;
+      }
+    } else {
+      const diff = (ty - fy) / (tx - fx);
+      while (fx != tx) {
+        const tty = fy + diff;
+        if (diff >= 0) {
+          while (fy <= tty) {
+            dots.push([fx, fy]);
+            fy += 1;
+          }
+        } else {
+          while (fy >= tty) {
+            dots.push([fx, fy]);
+            fy -= 1;
+          }
+        }
+        fy = tty;
+        fx += (tx - fx >= 1) ? 1 : -1;
+      }
+    }
+    return dots;
+  }
 
-    // draw
-    // originCtx.lineWidth = 1;
-    // originCtx.strokeStyle = 'rgb(0, 0, 255)';
-    // originCtx.moveTo(fx, fy);
-    // originCtx.lineTo(tx, ty);
-    // originCtx.stroke();
+  drawDot(x, y, color) {
+    this.dotToOrigin(x, y, color);
+    this.dotToDot(x, y, color);
+  }
 
-    // copy
+  dotToOrigin(x, y, color) {
+    this.originCtx.fillStyle = color;
+    this.originCtx.strokeStyle = color;
+    this.originCtx.fillRect(x, y, 1, 1);
+  }
 
-  };
+  dotToDot(x, y, color) {
+    this.dotCtx.fillStyle = color;
+    this.dotCtx.strokeStyle = color;
+    this.dotCtx.fillRect(x*16, y*16, 16, 16);
+  }
+
+  drawLine(fx, fy, tx, ty, color) {
+    this.originCtx.lineWidth = 1;
+    this.originCtx.fillStyle = color;
+    this.originCtx.strokeStyle = color;
+    this.originCtx.moveTo(fx, fy);
+    this.originCtx.lineTo(tx, ty);
+    this.originCtx.stroke();
+
+    this.lineToDots(fx, fy, tx, ty).forEach(dot => {
+      this.dotToDot(dot[0], dot[1], color);
+    });
+  }
 
   render() {
     return (

@@ -5,6 +5,7 @@ export default class DotCanvas extends Component {
     super(props);
     this.state = {};
 
+    this.canvas.bind(this);
     this.canvasContext.bind(this);
   }
 
@@ -12,8 +13,12 @@ export default class DotCanvas extends Component {
     this.setState({ ctx: this.refs.canvas.getContext('2d') });
   }
 
+  canvas() {
+    return this.refs.canvas;
+  }
+
   canvasContext() {
-    return this.state.ctx;
+    return this.refs.canvas.getContext('2d');
   }
 
   render() {
