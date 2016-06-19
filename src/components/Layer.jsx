@@ -14,13 +14,11 @@ export default class Layer extends Component {
   }
 
   componentDidMount() {
-    console.log(this.refs.origin.canvasContext());
     this.originCtx = this.refs.origin.canvasContext();
     this.originCanvas = this.refs.origin.canvas();
 
     this.dotCtx = this.refs.dot.canvasContext();
-
-    console.log(this.originCtx, this.dotCtx);
+    this.dotCanvas = this.refs.dot.canvas();
   }
 
   lineToDots(fx, fy, tx, ty) {
@@ -70,14 +68,8 @@ export default class Layer extends Component {
   }
 
   drawLine(fx, fy, tx, ty, color) {
-    this.originCtx.lineWidth = 1;
-    this.originCtx.fillStyle = color;
-    this.originCtx.strokeStyle = color;
-    this.originCtx.moveTo(fx, fy);
-    this.originCtx.lineTo(tx, ty);
-    this.originCtx.stroke();
-
     this.lineToDots(fx, fy, tx, ty).forEach(dot => {
+      this.dotToOrigin(dot[0], dot[1], color);
       this.dotToDot(dot[0], dot[1], color);
     });
   }
