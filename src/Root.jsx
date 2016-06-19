@@ -18,6 +18,14 @@ const Root = React.createClass({
     };
   },
 
+  onSwitchColor: function(newColor) {
+    this.setState({ color: newColor });
+  },
+
+  onSwitchTool: function(newTool) {
+    this.setState({ tool: newTool });
+  },
+
   onDraw: function(op) {
     const to = (op.to === 'virtual') ? this.refs.drawer : this.refs.layer;
     switch (op.kind) {
@@ -54,8 +62,8 @@ const Root = React.createClass({
   render: function() {
     return (
       <div>
-        <ToolPalette />
-        <ColorPalette />
+        <ToolPalette onSwitchTool={this.onSwitchTool} />
+        <ColorPalette onSwitchColor={this.onSwitchColor} />
         <Layer ref="layer" />
 
         <Drawer
