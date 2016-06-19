@@ -25,21 +25,21 @@ export default class Layer extends Component {
     const dots = [];
     if (fx == tx) {
       while (fy != ty) {
-        dots.push([fx, fy]);
+        dots.push([Math.floor(fx), Math.floor(fy)]);
         fy += (ty - fy >= 1) ? 1 : -1;
       }
     } else {
-      const diff = (ty - fy) / (tx - fx);
+      const diff = Math.abs((ty - fy) / (tx - fx));
       while (fx != tx) {
-        const tty = fy + diff;
+        const tty = fy + diff * ((ty >= fy) ? 1 : -1);
         if (diff >= 0) {
           while (fy <= tty) {
-            dots.push([fx, fy]);
+            dots.push([Math.floor(fx), Math.floor(fy)]);
             fy += 1;
           }
         } else {
           while (fy >= tty) {
-            dots.push([fx, fy]);
+            dots.push([Math.floor(fx), Math.floor(fy)]);
             fy -= 1;
           }
         }
@@ -47,6 +47,7 @@ export default class Layer extends Component {
         fx += (tx - fx >= 1) ? 1 : -1;
       }
     }
+    console.log(dots);
     return dots;
   }
 
