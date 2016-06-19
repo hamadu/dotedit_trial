@@ -1,4 +1,4 @@
-const React = require('react');
+import React, {Component, PropTypes} from 'react';
 const PALETTE = [
   [255, 0,   0,   '赤'],
   [255, 127, 0,   '橙'],
@@ -10,8 +10,8 @@ const PALETTE = [
   [255, 255, 255, '白']
 ];
 
-const ColorPalette = React.createClass({
-  render: function() {
+export default class ColorPalette extends Component {
+  render() {
     const colors = PALETTE.map(p => {
       const color = 'rgb(' + p.slice(0,3).join(',') + ')';
       return (
@@ -24,6 +24,6 @@ const ColorPalette = React.createClass({
       </div>
     );
   }
-});
+}
 
 module.exports = ColorPalette;
