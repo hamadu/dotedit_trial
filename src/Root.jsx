@@ -63,7 +63,7 @@ const Root = React.createClass({
     return (
       <div>
         <ToolPalette onSwitchTool={this.onSwitchTool} />
-        <ColorPalette onSwitchColor={this.onSwitchColor} />
+        <ColorPalette color={this.state.color} onSwitchColor={this.onSwitchColor} />
         <Layer ref="layer" />
 
         <Drawer

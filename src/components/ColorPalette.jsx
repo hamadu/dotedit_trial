@@ -14,8 +14,13 @@ export default class ColorPalette extends Component {
   render() {
     const colors = PALETTE.map(p => {
       const color = 'rgb(' + p.slice(0,3).join(',') + ')';
+      let style = {  };
+      if (color === this.props.color) {
+        style['border'] = '2px solid #000';
+      }
+
       return (
-        <button onClick={this.props.onSwitchColor.bind(null, color)}>{p[3]}</button>
+        <button style={style} onClick={this.props.onSwitchColor.bind(null, color)}>{p[3]}</button>
       )
     })
     return (
