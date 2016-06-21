@@ -3,8 +3,7 @@ const ToolPalette = require('./components/ToolPalette');
 const ColorPalette = require('./components/ColorPalette');
 import Layer from './components/Layer';
 import Drawer from './components/Drawer';
-import Pencil from './components/tools/Pencil'
-
+import Pencil from './components/tools/Pencil';
 
 const Root = React.createClass({
   getInitialState: function () {
@@ -62,7 +61,7 @@ const Root = React.createClass({
   render: function() {
     return (
       <div>
-        <ToolPalette onSwitchTool={this.onSwitchTool} />
+        <ToolPalette tool={this.state.tool.name()} onSwitchTool={this.onSwitchTool} />
         <ColorPalette color={this.state.color} onSwitchColor={this.onSwitchColor} />
         <Layer ref="layer" />
 
