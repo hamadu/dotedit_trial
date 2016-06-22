@@ -31,6 +31,8 @@ const Root = React.createClass({
     switch (op.kind) {
       case 'dot':
         to.drawDot(op.x, op.y, this.state.color);
+        break;
+      case 'move':
         this.setState({ last: { x: op.x, y: op.y }});
         break;
       case 'line':

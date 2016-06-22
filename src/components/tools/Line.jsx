@@ -12,7 +12,6 @@ export default () => {
   };
 
   const onMouseUp = (x, y) => {
-    console.log('upupup!');
     return { to: 'real', kind: 'line', x: x, y: y };
   };
 
