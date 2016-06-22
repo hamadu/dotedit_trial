@@ -47,7 +47,6 @@ export default class Layer extends Component {
         fx += (tx - fx >= 1) ? 1 : -1;
       }
     }
-    console.log(dots);
     return dots;
   }
 

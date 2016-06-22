@@ -1,12 +1,10 @@
 import React, {Component, PropTypes} from 'react';
 import Pencil from './tools/Pencil';
+import Line from './tools/Line';
 
 const TOOLS = [
   [Pencil(), '鉛筆'],
-  [Pencil(), '線分'],
-  [Pencil(), '四角形'],
-  [Pencil(), '消しゴム'],
-  [Pencil(), 'スポイト']
+  [Line(),   '線分']
 ];
 
 export default class ToolPalette extends Component {

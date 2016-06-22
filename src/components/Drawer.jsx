@@ -1,18 +1,71 @@
 import React, {Component, PropTypes} from 'react';
 import { findDOMNode } from 'react-dom'
-import Pencil from './tools/Pencil'
 
 export default class Drawer extends Component {
   constructor(props) {
     super(props);
-    this.state = { tool: Pencil() };
-
     this.getCursorPosition.bind(this);
+
+    this.drawDot.bind(this);
+    this.drawLine.bind(this);
+    this.clear.bind(this);
+    this.dot.bind(this);
   }
 
   componentDidMount() {
     this.canvas = findDOMNode(this);
-    this.tool = Pencil();
+    this.ctx = this.canvas.getContext('2d');
+  }
+
+  lineToDots(fx, fy, tx, ty) {
+    const dots = [];
+    if (fx == tx) {
+      while (fy != ty) {
+        dots.push([Math.floor(fx), Math.floor(fy)]);
+        fy += (ty - fy >= 1) ? 1 : -1;
+      }
+    } else {
+      const diff = Math.abs((ty - fy) / (tx - fx));
+      while (fx != tx) {
+        const tty = fy + diff * ((ty >= fy) ? 1 : -1);
+        if (diff >= 0) {
+          while (fy <= tty) {
+            dots.push([Math.floor(fx), Math.floor(fy)]);
+            fy += 1;
+          }
+        } else {
+          while (fy >= tty) {
+            dots.push([Math.floor(fx), Math.floor(fy)]);
+            fy -= 1;
+          }
+        }
+        fy = tty;
+        fx += (tx - fx >= 1) ? 1 : -1;
+      }
+    }
+    return dots;
+  }
+
+  drawDot(x, y, color) {
+    this.clear();
+    this.dot(x, y, color);
+  }
+
+  drawLine(fx, fy, tx, ty, color) {
+    this.clear();
+    this.lineToDots(fx, fy, tx, ty).forEach(dot => {
+      this.dot(dot[0], dot[1], color);
+    });
+  }
+
+  clear() {
+    this.ctx.clearRect(0, 0, 512, 512);
+  }
+
+  dot(x, y, color) {
+    this.ctx.fillStyle = color;
+    this.ctx.strokeStyle = color;
+    this.ctx.fillRect(x*16, y*16, 16, 16);
   }
 
   getCursorPosition(e) {

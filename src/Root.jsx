@@ -4,11 +4,12 @@ const ColorPalette = require('./components/ColorPalette');
 import Layer from './components/Layer';
 import Drawer from './components/Drawer';
 import Pencil from './components/tools/Pencil';
+import Line from './components/tools/Line';
 
 const Root = React.createClass({
   getInitialState: function () {
     return {
-      name: "not clicked",
+      name: 'not clicked',
       color: 'rgb(0,0,255)',
       tool: Pencil(),
       selection: {},
@@ -34,7 +35,6 @@ const Root = React.createClass({
         break;
       case 'line':
         to.drawLine(this.state.last.x, this.state.last.y, op.x, op.y, this.state.color);
-        this.setState({ last: { x: op.x, y: op.y }});
         break;
     }
   },
@@ -53,7 +53,7 @@ const Root = React.createClass({
   },
 
   onMouseUp: function(x, y) {
-    const inst = this.state.tool.onMouseMove(x, y);
+    const inst = this.state.tool.onMouseUp(x, y);
     this.setState({ drawing: false });
     this.onDraw(inst);
   },
