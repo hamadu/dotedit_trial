@@ -42,22 +42,19 @@ const Root = React.createClass({
   },
 
   onMouseDown: function(x, y) {
-    const inst = this.state.tool.onMouseDown(x, y);
     this.setState({ drawing: true });
-    this.onDraw(inst);
+    this.state.tool.onMouseDown(x, y).forEach(inst => this.onDraw(inst));
   },
 
   onMouseMove: function(x, y) {
     if (this.state.drawing) {
-      const inst = this.state.tool.onMouseMove(x, y);
-      this.onDraw(inst);
+      this.state.tool.onMouseMove(x, y).forEach(inst => this.onDraw(inst));
     }
   },
 
   onMouseUp: function(x, y) {
-    const inst = this.state.tool.onMouseUp(x, y);
     this.setState({ drawing: false });
-    this.onDraw(inst);
+    this.state.tool.onMouseUp(x, y).forEach(inst => this.onDraw(inst));
   },
 
   render: function() {
