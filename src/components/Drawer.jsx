@@ -17,6 +17,7 @@ export default class Drawer extends Component {
     this.ctx = this.canvas.getContext('2d');
   }
 
+  // FIXME: duplicate
   lineToDots(fx, fy, tx, ty) {
     const dots = [];
     if (fx == tx) {
