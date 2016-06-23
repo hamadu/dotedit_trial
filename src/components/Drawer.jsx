@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react';
+import Geometry from '../utils/geometry';
 import { findDOMNode } from 'react-dom'
 
 export default class Drawer extends Component {
@@ -17,36 +18,6 @@ export default class Drawer extends Component {
     this.ctx = this.canvas.getContext('2d');
   }
 
-  // FIXME: duplicate
-  lineToDots(fx, fy, tx, ty) {
-    const dots = [];
-    if (fx == tx) {
-      while (fy != ty) {
-        dots.push([Math.floor(fx), Math.floor(fy)]);
-        fy += (ty - fy >= 1) ? 1 : -1;
-      }
-    } else {
-      const diff = Math.abs((ty - fy) / (tx - fx));
-      while (fx != tx) {
-        const tty = fy + diff * ((ty >= fy) ? 1 : -1);
-        if (diff >= 0) {
-          while (fy <= tty) {
-            dots.push([Math.floor(fx), Math.floor(fy)]);
-            fy += 1;
-          }
-        } else {
-          while (fy >= tty) {
-            dots.push([Math.floor(fx), Math.floor(fy)]);
-            fy -= 1;
-          }
-        }
-        fy = tty;
-        fx += (tx - fx >= 1) ? 1 : -1;
-      }
-    }
-    return dots;
-  }
-
   drawDot(x, y, color) {
     this.clear();
     this.dot(x, y, color);
@@ -54,7 +25,7 @@ export default class Drawer extends Component {
 
   drawLine(fx, fy, tx, ty, color) {
     this.clear();
-    this.lineToDots(fx, fy, tx, ty).forEach(dot => {
+    Geometry().lineToDots(fx, fy, tx, ty).forEach(dot => {
       this.dot(dot[0], dot[1], color);
     });
   }

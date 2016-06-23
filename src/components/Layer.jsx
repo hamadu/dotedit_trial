@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react';
+import Geometry from '../utils/geometry';
 import OriginCanvas from './OriginCanvas';
 import DotCanvas from './DotCanvas';
 
@@ -68,7 +69,7 @@ export default class Layer extends Component {
   }
 
   drawLine(fx, fy, tx, ty, color) {
-    this.lineToDots(fx, fy, tx, ty).forEach(dot => {
+    Geometry().lineToDots(fx, fy, tx, ty).forEach(dot => {
       this.dotToOrigin(dot[0], dot[1], color);
       this.dotToDot(dot[0], dot[1], color);
     });
