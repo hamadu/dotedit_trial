@@ -3,6 +3,8 @@ const ToolPalette = require('./components/ToolPalette');
 const ColorPalette = require('./components/ColorPalette');
 import Layer from './components/Layer';
 import Drawer from './components/Drawer';
+import Grid from './components/Grid';
+
 import Pencil from './components/tools/Pencil';
 import Line from './components/tools/Line';
 
@@ -63,6 +65,8 @@ const Root = React.createClass({
         <ToolPalette tool={this.state.tool.name()} onSwitchTool={this.onSwitchTool} />
         <ColorPalette color={this.state.color} onSwitchColor={this.onSwitchColor} />
         <Layer ref="layer" />
+
+        <Grid ref="grid" />
 
         <Drawer
           ref="drawer"
