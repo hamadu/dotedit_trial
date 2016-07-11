@@ -38,7 +38,7 @@ const Root = React.createClass({
         this.setState({ last: { x: op.x, y: op.y }});
         break;
       case 'line':
-        to.drawLine(this.state.last.x, this.state.last.y, op.x, op.y, this.state.color);
+        to.drawLine(op.fx, op.fy, op.tx, op.ty, this.state.color);
         break;
     }
   },

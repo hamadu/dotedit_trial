@@ -69,8 +69,6 @@ export default class Layer extends Component {
   }
 
   drawLine(fx, fy, tx, ty, color) {
-    console.log(fx,fy,tx,ty);
-
     Geometry().lineToDots(fx, fy, tx, ty).forEach(dot => {
       this.dotToOrigin(dot[0], dot[1], color);
       this.dotToDot(dot[0], dot[1], color);

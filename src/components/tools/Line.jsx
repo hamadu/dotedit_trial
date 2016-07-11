@@ -3,22 +3,25 @@ export default () => {
     return 'line';
   };
 
+  let fromX, fromY;
+
   const onMouseDown = (x, y) => {
+    fromX = x;
+    fromY = y;
     return [
-      { to: 'virtual', kind: 'dot', x: x, y: y },
-      { kind: 'move', x: x, y: y }
+      { to: 'virtual', kind: 'dot', x: x, y: y }
     ];
   };
 
   const onMouseMove = (x, y) => {
     return [
-      { to: 'virtual', kind: 'line', x: x, y: y }
+      { to: 'virtual', kind: 'line', fx: fromX, fy: fromY, tx: x, ty: y }
     ];
   };
 
   const onMouseUp = (x, y) => {
     return [
-      { to: 'real', kind: 'line', x: x, y: y }
+      { to: 'real', kind: 'line', fx: fromX, fy: fromY, tx: x, ty: y }
     ];
   };
 
