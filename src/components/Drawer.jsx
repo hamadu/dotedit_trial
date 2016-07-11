@@ -19,12 +19,10 @@ export default class Drawer extends Component {
   }
 
   drawDot(x, y, color) {
-    this.clear();
     this.dot(x, y, color);
   }
 
   drawLine(fx, fy, tx, ty, color) {
-    this.clear();
     Geometry().lineToDots(fx, fy, tx, ty).forEach(dot => {
       this.dot(dot[0], dot[1], color);
     });

@@ -27,6 +27,18 @@ export default class Layer extends Component {
     this.dotToDot(x, y, color);
   }
 
+  drawLine(fx, fy, tx, ty, color) {
+    Geometry().lineToDots(fx, fy, tx, ty).forEach(dot => {
+      this.dotToOrigin(dot[0], dot[1], color);
+      this.dotToDot(dot[0], dot[1], color);
+    });
+  }
+
+  clear() {
+    this.dotCtx.clearRect(0, 0, 512, 512);
+    this.originCtx.clearRect(0, 0, 32, 32);
+  }
+
   dotToOrigin(x, y, color) {
     this.originCtx.fillStyle = color;
     this.originCtx.strokeStyle = color;
@@ -37,13 +49,6 @@ export default class Layer extends Component {
     this.dotCtx.fillStyle = color;
     this.dotCtx.strokeStyle = color;
     this.dotCtx.fillRect(x*16, y*16, 16, 16);
-  }
-
-  drawLine(fx, fy, tx, ty, color) {
-    Geometry().lineToDots(fx, fy, tx, ty).forEach(dot => {
-      this.dotToOrigin(dot[0], dot[1], color);
-      this.dotToDot(dot[0], dot[1], color);
-    });
   }
 
   render() {

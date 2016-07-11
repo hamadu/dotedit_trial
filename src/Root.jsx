@@ -40,6 +40,9 @@ const Root = React.createClass({
       case 'line':
         to.drawLine(op.fx, op.fy, op.tx, op.ty, this.state.color);
         break;
+      case 'clear':
+        to.clear();
+        break;
     }
   },
 
