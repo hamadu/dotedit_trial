@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var livereload = require('gulp-livereload');
 var webpack = require('webpack-stream');
 var webpackConfig = require('./webpack.config.js');
 
@@ -15,7 +16,13 @@ gulp.task('copyIndex', ['cleanBuild'], function () {
 gulp.task('build', ['copyIndex'], function (cb) {
   return gulp.src('')
   .pipe(webpack(webpackConfig))
-  .pipe(gulp.dest(''));
+  .pipe(gulp.dest(''))
+  .pipe(livereload());
 });
 
-gulp.task('default', ['build']);
+gulp.task('watch', function() {
+  livereload.listen();
+  gulp.watch('src/**/*.jsx', ['build']);
+});
+
+gulp.task('default', ['watch']);
