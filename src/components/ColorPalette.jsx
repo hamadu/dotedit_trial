@@ -31,4 +31,8 @@ export default class ColorPalette extends Component {
   }
 }
 
+ColorPalette.propTypes = {
+  color: React.PropTypes.string
+};
+
 module.exports = ColorPalette;

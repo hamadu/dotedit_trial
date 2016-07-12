@@ -78,4 +78,10 @@ export default class Drawer extends Component {
   }
 }
 
+Drawer.propTypes = {
+  onMouseDown: React.PropTypes.func,
+  onMouseMove: React.PropTypes.func,
+  onMouseUp: React.PropTypes.func,
+};
+
 module.exports = Drawer;

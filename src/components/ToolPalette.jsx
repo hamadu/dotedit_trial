@@ -28,4 +28,9 @@ export default class ToolPalette extends Component {
   }
 }
 
+ToolPalette.propTypes = {
+  tool: React.PropTypes.string,
+  onSwitchTool: React.PropTypes.func
+}
+
 module.exports = ToolPalette;
